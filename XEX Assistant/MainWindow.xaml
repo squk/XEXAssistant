@@ -9,7 +9,7 @@
         params:Design.AccentBrush="BlueViolet"
         params:Manager.AccentBrush="BlueViolet"
         params:Manager.ContrastBrush="White"
-        Title="Value Tester" Height="443" Width="623" Loaded="Window_Loaded_1">
+        Title="Value Tester" Height="317.781" Width="630.366" Loaded="Window_Loaded_1">
     <Grid>
         <ListView x:Name="offsetsList" HorizontalAlignment="Left" Margin="10,10,0,72" Width="319" Foreground="#FF04711D">
             <ListView.View>
