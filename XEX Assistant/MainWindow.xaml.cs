@@ -68,7 +68,6 @@ namespace XEX_Assistant
                 {
                     try
                     {
-                        Elysium.Manager.Apply(Application.Current, Elysium.Theme.Dark, Brushes.YellowGreen, Brushes.White);
                         string[] temp = stringlst[i].Split('.');
                         type = temp[2];
                         temp = type.Split(' ');
