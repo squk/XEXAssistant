@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Offset.cs" />
     <Compile Include="RealTimeEditing.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>

@@ -145,7 +145,7 @@ namespace XEX_Assistant
             }
         }
 
-        public string PeekXbox(uint offset, string type)
+        public string PeekXbox(uint offset, string type, bool notification)
         {
             if (isConnected)
             {
@@ -205,8 +205,8 @@ namespace XEX_Assistant
             }
             else
             {
-                Elysium.Notifications.NotificationManager.BeginTryPush("Error", "You are not connected to your XDK");
-                //MessageBox.Show("You are not connected to your XDK");
+                if(notification)
+                    Elysium.Notifications.NotificationManager.BeginTryPush("Error", "You are not connected to your XDK");
                 return "Not Connected";
             }
         }

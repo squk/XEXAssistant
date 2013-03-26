@@ -9,12 +9,15 @@
         params:Design.AccentBrush="BlueViolet"
         params:Manager.AccentBrush="BlueViolet"
         params:Manager.ContrastBrush="White"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Value Tester" Height="317.781" Width="630.366" Loaded="Window_Loaded_1">
     <Grid>
-        <ListView x:Name="offsetsList" HorizontalAlignment="Left" Margin="10,10,0,72" Width="319" Foreground="#FF04711D">
+        <ListView x:Name="offsetsList" ItemsSource="{Binding OffsetCollection}" HorizontalAlignment="Left" Margin="10,10,0,72" Width="319">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Width="145" Header="Offset" DisplayMemberBinding="{Binding Address}" />
+                    <GridViewColumn Width="70" Header="Type" DisplayMemberBinding="{Binding Type}" />
+                    <GridViewColumn Width="100" Header="Value" DisplayMemberBinding="{Binding Value}" />
                 </GridView>
             </ListView.View>
         </ListView>

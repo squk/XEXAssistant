@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Windows.Threading;
 using XDevkit;
+using System.Collections.ObjectModel;
 
 namespace XEX_Assistant
 {
@@ -40,14 +41,20 @@ namespace XEX_Assistant
             Elysium.Manager.Apply(Application.Current, Elysium.Theme.Light, Brushes.BlueViolet, Brushes.Black);
         }
 
+        ObservableCollection<Offset> _OffsetCollection = new ObservableCollection<Offset>();
+
+        public ObservableCollection<Offset> OffsetCollection
+        { get { return _OffsetCollection; } }
 
         private void AddCheckBox(string offset, string type)
         {
-            CheckBox checkbox = new CheckBox();
-            checkbox.Content = offset;
-            checkbox.IsEnabled = false;
-            checkbox.Foreground = Brushes.Black;
-            offsetsList.Items.Add((object)checkbox);
+            _OffsetCollection.Add(new Offset(offset, type));
+
+            //CheckBox checkbox = new CheckBox();
+            //checkbox.Content = offset;
+            //checkbox.IsEnabled = false;
+            //checkbox.Foreground = Brushes.Black;
+            //offsetsList.Items.Add((object)checkbox);
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
@@ -123,7 +130,7 @@ namespace XEX_Assistant
             timer.Tick += new EventHandler(timer_Tick);
             remainingTime = totalTime;
 
-            rte.PokeXbox(Convert.ToUInt32((offsetsList.Items[0] as CheckBox).Content.ToString(), 0x10), "float", valuesBox.Text.Split(',')[0]);
+            rte.PokeXbox(Convert.ToUInt32(OffsetCollection[0].Address, 0x10), "float", valuesBox.Text.Split(',')[0]);
             currentValue++;
         }
 
@@ -137,14 +144,16 @@ namespace XEX_Assistant
                     {
                         offsetsList.SelectedIndex = currentOffset;
                         remainingTime = totalTime;
-                        string offset = (offsetsList.Items[currentOffset] as CheckBox).Content.ToString();
+                        string offset = OffsetCollection[currentOffset].Address;
                         string value = valuesBox.Text.Split(',')[currentValue];
-
-                        rte.PokeXbox(Convert.ToUInt32(offset.ToString(), 0x10), "float", value);
-
+                        value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);
+                        if (value != "No Console Detected" && value != "Not Connected")
+                        {
+                            rte.PokeXbox(Convert.ToUInt32(offset.ToString(), 0x10), "float", value);
+                        }
                         if (currentValue == totalValues-1)
                         {
-                            (offsetsList.Items[currentOffset] as CheckBox).IsChecked = true;
+                            //(offsetsList.Items[currentOffset] as CheckBox).IsChecked = true;
                             currentOffset++;
                             currentValue = 0;
                         }
