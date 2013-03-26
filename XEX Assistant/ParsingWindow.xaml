@@ -1,0 +1,19 @@
+﻿<Controls:Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Elysium.Controls;assembly=Elysium"
+        xmlns:params="http://schemas.codeplex.com/elysium/params" x:Class="XEX_Assistant.ParsingWindow"
+        WindowStartupLocation="CenterScreen"
+        params:Design.Theme="Light"
+        params:Manager.Theme="Light"
+        params:Design.AccentBrush="BlueViolet"
+        params:Manager.AccentBrush="BlueViolet"
+        params:Manager.ContrastBrush="White"
+        Title="Value Parser" Height="435.192" Width="580.966">
+    <Grid>
+        <Button x:Name="parseValuesButton" Content="Parse Values" HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom" Width="95" Click="parseValuesButton_Click"/>
+        <TextBox x:Name="valuesBox" Margin="10,10,10,41" TextWrapping="Wrap" Text="Enter your values here then hit &quot;Parse Values&quot;.  This process may take a while depending on the amount of values. " VerticalContentAlignment="Top" AcceptsReturn="True"/>
+
+    </Grid>
+</Controls:Window>
+
