@@ -184,7 +184,6 @@ namespace XEX_Assistant
                 object rn = null;
                 if (xdkName != "")
                 {
-                    Xbox_Debug_Communicator = new XboxDebugCommunicator(xdkName);
                     if (!Xbox_Debug_Communicator.Connected)
                     {
                         try

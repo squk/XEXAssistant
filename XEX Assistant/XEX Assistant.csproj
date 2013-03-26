@@ -33,6 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>xexassistant.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="elysium, Version=1.5.873.0, Culture=neutral, PublicKeyToken=afa220db249e5b15, processorArchitecture=MSIL" />
     <Reference Include="Elysium.Notifications, Version=1.5.41.0, Culture=neutral, PublicKeyToken=afa220db249e5b15, processorArchitecture=MSIL">
@@ -132,6 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="xexassistant.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
