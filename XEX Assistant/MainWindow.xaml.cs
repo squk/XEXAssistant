@@ -116,7 +116,7 @@ namespace XEX_Assistant
         private void StartIntervalPoking()
         {
             totalOffsets = offsetsList.Items.Count;
-            totalValues = valuesBox.Text.Split('\n').Count();
+            totalValues = valuesBox.Text.Split('r').Count();
 
             timer.Enabled = true;
             timer.Interval = 1000;//(int)TimeSpan.FromSeconds(totalTime).Ticks;
@@ -142,7 +142,7 @@ namespace XEX_Assistant
 
                         rte.PokeXbox(Convert.ToUInt32(offset.ToString(), 0x10), "float", value);
 
-                        if (currentValue == totalValues + 1)
+                        if (currentValue == totalValues)
                         {
                             (offsetsList.Items[currentOffset] as CheckBox).IsChecked = true;
                             currentOffset++;
