@@ -45,6 +45,8 @@ namespace XEX_Assistant
         {
             CheckBox checkbox = new CheckBox();
             checkbox.Content = offset;
+            checkbox.IsEnabled = false;
+            checkbox.Foreground = Brushes.Black;
             offsetsList.Items.Add((object)checkbox);
         }
 
@@ -135,7 +137,10 @@ namespace XEX_Assistant
                     {
                         offsetsList.SelectedIndex = currentOffset;
                         remainingTime = totalTime;
-                        rte.PokeXbox(Convert.ToUInt32((offsetsList.Items[currentOffset] as CheckBox).Content.ToString(), 0x10), "float", valuesBox.Text.Split(',')[currentValue]);
+                        string offset = (offsetsList.Items[currentOffset] as CheckBox).Content.ToString();
+                        string value = valuesBox.Text.Split(',')[currentValue];
+
+                        rte.PokeXbox(Convert.ToUInt32(offset.ToString(), 0x10), "float", value);
 
                         if (currentValue == totalValues + 1)
                         {
