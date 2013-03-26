@@ -61,12 +61,43 @@ namespace XEX_Assistant
                 return true;
             }
         }
+           
+        public bool ConnectWithoutNotification()
+        {
+            //Elysium.Manager.Apply(Application.Current, Elysium.Theme.Light, Brushes.BlueViolet, Brushes.Black);
+            Xbox_Debug_Communicator = new XboxDebugCommunicator(xdkName);
+            if (!Xbox_Debug_Communicator.Connected)
+            {
+                try
+                {
+                    Xbox_Debug_Communicator.Connect();
+                    isConnected = true;
+                    return true;
+                }
+                catch
+                {
+                    isConnected = false;
+                    return false;
+                }
+            }
+            else
+            {
+                isConnected = true;
+                return true;
+            }
+        }
 
         public void Disconnect()
         {
             Xbox_Debug_Communicator.Disconnect();
             isConnected = false;
             Elysium.Notifications.NotificationManager.BeginTryPush("Success", "You are no longer connected to " + xdkName);
+        }
+
+        public void DisconnectWithoutNotification()
+        {
+            Xbox_Debug_Communicator.Disconnect();
+            isConnected = false;
         }
 
         public void PokeXbox(uint offset, string poketype, string amount)

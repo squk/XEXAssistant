@@ -15,13 +15,13 @@
         <ListView x:Name="offsetsList" ItemsSource="{Binding OffsetCollection}" HorizontalAlignment="Left" Margin="10,10,0,72" Width="319">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="145" Header="Offset" DisplayMemberBinding="{Binding Address}" />
-                    <GridViewColumn Width="70" Header="Type" DisplayMemberBinding="{Binding Type}" />
+                    <GridViewColumn Width="140" Header="Offset" DisplayMemberBinding="{Binding Address}" />
+                    <GridViewColumn Width="60" Header="Type" DisplayMemberBinding="{Binding Type}" />
                     <GridViewColumn Width="100" Header="Value" DisplayMemberBinding="{Binding Value}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="valuesBox" HorizontalAlignment="Left" Height="57" Margin="10,0,0,10" TextWrapping="Wrap" Text="Enter the values to be tested here. Separate by a comma. " VerticalContentAlignment="Top" VerticalAlignment="Bottom" Width="319" AcceptsReturn="True" ToolTip="Seperate values with newline"/>
+        <TextBox x:Name="valuesBox" HorizontalAlignment="Left" Height="57" Margin="10,0,0,10" TextWrapping="Wrap" Text="Enter the values to be tested here. Separate by a comma. Use &quot;DEFAULT&quot; to poke the offset's default value. " VerticalContentAlignment="Top" VerticalAlignment="Bottom" Width="319" AcceptsReturn="True" ToolTip="Seperate values with newline"/>
         <Button x:Name="startButton" Content="Start Testing" HorizontalAlignment="Right" Margin="0,0,10,21" VerticalAlignment="Bottom" Width="102" Click="startButton_Click"/>
         <TextBlock x:Name="loadingBlock" HorizontalAlignment="Left" Margin="127,170,0,0" TextWrapping="Wrap" Text="Loading..." VerticalAlignment="Top" FontSize="20" Visibility="Hidden"/>
         <TextBox x:Name="timeBox" HorizontalAlignment="Right" Height="25" Margin="0,0,62,57" TextWrapping="Wrap" Text="120" VerticalAlignment="Bottom" Width="34" FontSize="13.333"/>

@@ -149,7 +149,7 @@ namespace XEX_Assistant
                         value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);
                         if (value != "No Console Detected" && value != "Not Connected")
                         {
-                            rte.PokeXbox(Convert.ToUInt32(offset.ToString(), 0x10), "float", value);
+                            rte.PokeXbox(Convert.ToUInt32(offset, 0x10), OffsetCollection[currentOffset].Type, value);
                         }
                         if (currentValue == totalValues-1)
                         {
