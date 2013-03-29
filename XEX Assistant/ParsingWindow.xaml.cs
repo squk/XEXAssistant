@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace XEX_Assistant
 {
@@ -21,6 +23,7 @@ namespace XEX_Assistant
         public ParsingWindow()
         {
             InitializeComponent();
+            CheckForUpdate();
             Elysium.Manager.Apply(Application.Current, Elysium.Theme.Light, Brushes.YellowGreen, Brushes.Black);
         }
 
@@ -29,10 +32,32 @@ namespace XEX_Assistant
             new MainWindow(valuesBox.Text).Show();
         }
 
-        string GetStringFromRichTextBox(RichTextBox rtb)
+        private void CheckForUpdate()
         {
-            var textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-            return textRange.Text;
+            string downloadUrl = "";
+            Version newVersion = null;
+            string aboutUpdate = "";
+            string xmlUrl = "http://www.ctnieves.com/projects/software.xml";
+            XmlTextReader reader = new XmlTextReader(xmlUrl);
+            XmlDocument updateDoc = new XmlDocument();
+            updateDoc.Load(reader);
+            XmlNode softwareNameNode = updateDoc.SelectSingleNode("ctnievesSoftware").SelectSingleNode("XEXAssistant");
+
+            newVersion = Version.Parse(softwareNameNode.SelectSingleNode("version").InnerText);
+            downloadUrl = softwareNameNode.SelectSingleNode("url").InnerText;
+            aboutUpdate = softwareNameNode.SelectSingleNode("about").InnerText;
+
+            reader.Close();
+            reader.Dispose();
+
+            Version applicationVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            if (applicationVersion.CompareTo(newVersion) < 0)
+            {
+                MessageBox.Show("New Version Available : " + newVersion.ToString() + "\n" +
+                                "Url : " + downloadUrl + "\n" +
+                                "About Update : " + aboutUpdate);
+                Process.Start(downloadUrl);
+            }
         }
     }
 }
