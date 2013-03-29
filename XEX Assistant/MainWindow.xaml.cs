@@ -15,6 +15,8 @@ using System.ComponentModel;
 using System.Windows.Threading;
 using XDevkit;
 using System.Collections.ObjectModel;
+using HaloDevelopmentExtender;
+using HaloReach3d;
 
 namespace XEX_Assistant
 {
@@ -29,6 +31,8 @@ namespace XEX_Assistant
         private RealTimeEditing rte;
 
         private bool isPaused;
+
+        private bool getValueFromXbox;
 
         public MainWindow(string Values)
         {
@@ -48,17 +52,30 @@ namespace XEX_Assistant
 
         private void AddCheckBox(string offset, string type)
         {
-            _OffsetCollection.Add(new Offset(offset, type));
-
-            //CheckBox checkbox = new CheckBox();
-            //checkbox.Content = offset;
-            //checkbox.IsEnabled = false;
-            //checkbox.Foreground = Brushes.Black;
-            //offsetsList.Items.Add((object)checkbox);
+            _OffsetCollection.Add(new Offset(offset, type, getValueFromXbox));
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
+            XboxDebugCommunicator Xbox_Debug_Communicator = new XboxDebugCommunicator(new XboxManager().DefaultConsole);
+            //Connect
+            if (Xbox_Debug_Communicator.Connected == false)
+            {
+                try
+                {
+                    Xbox_Debug_Communicator.Connect();
+                    getValueFromXbox = true;
+                }
+                catch
+                {
+                    getValueFromXbox = false;
+                }
+            }
+            else
+            {
+                getValueFromXbox = true;
+            }
+
             string[] stringlst = values.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
             string type = "";
             string offset = "";

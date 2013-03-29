@@ -37,6 +37,9 @@
     <ApplicationIcon>xexassistant.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="elysium, Version=1.5.873.0, Culture=neutral, PublicKeyToken=afa220db249e5b15, processorArchitecture=MSIL" />
     <Reference Include="Elysium.Notifications, Version=1.5.41.0, Culture=neutral, PublicKeyToken=afa220db249e5b15, processorArchitecture=MSIL">

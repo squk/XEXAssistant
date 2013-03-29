@@ -15,11 +15,14 @@ namespace XEX_Assistant
         public string Type { get; set; }
         public string Value { get; set; }
 
-        public Offset(string offset, string type)
+        public Offset(string offset, string type, bool getValueFromXbox)
         {
             Address = offset;
             Type = type;
-            Value = getValue(Convert.ToUInt32(Address, 0x10), Type);
+            if (getValueFromXbox)
+            {
+                Value = getValue(Convert.ToUInt32(Address, 0x10), Type);
+            }
         }
 
         public string getValue(uint offset, string type)
