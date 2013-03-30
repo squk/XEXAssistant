@@ -100,8 +100,12 @@ namespace XEX_Assistant
             isConnected = false;
         }
 
-        public void PokeXbox(uint offset, string poketype, string amount)
+        public void PokeXbox(Offset offsetData)
         {
+            uint offset = offsetData.Address;
+            string poketype = offsetData.Type;
+            string amount = offsetData.Value;
+
             if (isConnected)
             {
                 try
@@ -176,7 +180,7 @@ namespace XEX_Assistant
             }
         }
 
-        public string PeekXbox(uint offset, string type, bool notification)
+        public string PeekXbox(uint offset, string type)
         {
             if (isConnected)
             {
@@ -235,8 +239,7 @@ namespace XEX_Assistant
             }
             else
             {
-                if(notification)
-                    Elysium.Notifications.NotificationManager.BeginTryPush("Error", "You are not connected to your XDK");
+                Elysium.Notifications.NotificationManager.BeginTryPush("Error", "You are not connected to your XDK");
                 return "Not Connected";
             }
         }
