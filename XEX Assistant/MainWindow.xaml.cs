@@ -52,7 +52,7 @@ namespace XEX_Assistant
 
         private void AddCheckBox(string offset, string type)
         {
-            _OffsetCollection.Add(new Offset(Convert.ToUInt32(offset, 0x10), type, getValueFromXbox));
+            _OffsetCollection.Add(new Offset(offset, type, getValueFromXbox));
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
@@ -190,7 +190,7 @@ namespace XEX_Assistant
                         {
                             remainingTime = totalTime;
 
-                            uint offset = OffsetCollection[currentOffset].Address;
+                            string offset = OffsetCollection[currentOffset].Address;
                             string type = OffsetCollection[currentOffset].Type;
                             string value = valuesBox.Text.Split(',')[currentValue];
                             value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);
@@ -222,7 +222,7 @@ namespace XEX_Assistant
                             offsetsList.SelectedIndex = currentOffset;
                             remainingTime = totalTime;
 
-                            uint offset = OffsetCollection[currentOffset].Address;
+                            string offset = OffsetCollection[currentOffset].Address;
                             string type = OffsetCollection[currentOffset].Type;
                             string value = valuesBox.Text.Split(',')[currentValue];
                             value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);

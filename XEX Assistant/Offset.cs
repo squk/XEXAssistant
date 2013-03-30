@@ -11,21 +11,21 @@ namespace XEX_Assistant
 {
     public class Offset
     {
-        public uint Address { get; set; }
+        public string Address { get; set; }
         public string Type { get; set; }
         public string Value { get; set; }
 
-        public Offset(uint offset, string type, bool getValueFromXbox)
+        public Offset(string offset, string type, bool getValueFromXbox)
         {
             Address = offset;
             Type = type;
             if (getValueFromXbox)
             {
-                Value = getValue(Address, Type);
+                Value = getValue(Convert.ToUInt32(Address, 0x10), Type);
             }
         }
 
-        public Offset(uint offset, string type, string value)
+        public Offset(string offset, string type, string value)
         {
             Address = offset;
             Type = type;
