@@ -102,7 +102,7 @@ namespace XEX_Assistant
 
         public void PokeXbox(Offset offsetData)
         {
-            uint offset = offsetData.Address;
+            uint offset = Convert.ToUInt32(offsetData.Address, 0x10);
             string poketype = offsetData.Type;
             string amount = offsetData.Value;
 
