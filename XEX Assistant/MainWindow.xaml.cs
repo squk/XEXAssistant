@@ -79,7 +79,6 @@ namespace XEX_Assistant
             string[] stringlst = values.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
             string type = "";
             string offset = "";
-            valuesBox.Text += "\n " + stringlst.Count().ToString();
             for (int i = 0; i < stringlst.Count(); i++)
             {
                 try
@@ -131,23 +130,51 @@ namespace XEX_Assistant
         }
 
         private int currentOffset;
-        private int totalOffsets;
+        private int currentBatch;
+
         private int currentValue;
         private int totalValues;
         
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        private List<List<Offset>> offsetBatches = new List<List<Offset>>();
+        private bool useBatchPoking = false;
 
         private void StartIntervalPoking()
         {
-            totalOffsets = offsetsList.Items.Count;
             totalValues = valuesBox.Text.Split(',').Count();
+            
+            //prevent checking/unchecking once process has started
+            if (batchTestingCheck.IsChecked == true)
+            {
+                useBatchPoking = true;
+                for (int i = 0; i < totalValues; i += Convert.ToInt32(batchesBox.Text))
+                {
+                    List<Offset> singleBatch = new List<Offset>();
+                    for (int j = 0; j < Convert.ToInt32(batchesBox.Text); j++)
+                    {
+                        singleBatch.Add(OffsetCollection[i + j]);
+                    }
+                    offsetBatches.Add(singleBatch);
+                }
+            }
 
             timer.Enabled = true;
             timer.Interval = 1000;
             timer.Tick += new EventHandler(timer_Tick);
             remainingTime = totalTime;
-
-            rte.PokeXbox(new Offset(OffsetCollection[0].Address, "float", valuesBox.Text.Split(',')[0]));
+            if (useBatchPoking)
+            {
+                foreach (Offset offsetSinglet in offsetBatches[0])
+                {
+                    Offset OffsetSinglet = offsetSinglet;
+                    OffsetSinglet.Value = valuesBox.Text.Split(',')[0];
+                    rte.PokeXbox(OffsetSinglet);
+                }
+            }
+            else
+            {
+                rte.PokeXbox(new Offset(OffsetCollection[0].Address, "float", valuesBox.Text.Split(',')[0]));
+            }
             currentValue++;
         }
 
@@ -157,25 +184,62 @@ namespace XEX_Assistant
             {
                 if (remainingTime-- == 0)
                 {
-                    if (currentOffset <= offsetsList.Items.Count)
+                    if (useBatchPoking == true)
                     {
-                        offsetsList.SelectedIndex = currentOffset;
-                        remainingTime = totalTime;
-                        uint offset = OffsetCollection[currentOffset].Address;
-                        string value = valuesBox.Text.Split(',')[currentValue];
-                        value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);
-                        if (value != "No Console Detected" && value != "Not Connected")
+                        if (currentBatch <= offsetBatches.Count)
                         {
-                            rte.PokeXbox(new Offset(offset, OffsetCollection[currentOffset].Type, value));
+                            remainingTime = totalTime;
+
+                            uint offset = OffsetCollection[currentOffset].Address;
+                            string type = OffsetCollection[currentOffset].Type;
+                            string value = valuesBox.Text.Split(',')[currentValue];
+                            value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);
+
+                            if (value != "No Console Detected" && value != "Not Connected")
+                            {
+                                foreach(Offset offsetSinglet in offsetBatches[currentBatch])
+                                {
+                                    Offset OffsetSinglet = offsetSinglet;
+                                    OffsetSinglet.Value = value;
+                                    rte.PokeXbox(OffsetSinglet);
+                                }
+                            }
+                            if (currentValue == totalValues - 1)
+                            {
+                                currentBatch++;
+                                currentValue = 0;
+                            }
+                            else
+                            {
+                                currentValue++;
+                            }
                         }
-                        if (currentValue == totalValues-1)
+                    }
+                    else
+                    {
+                        if (currentOffset <= offsetsList.Items.Count)
                         {
-                            currentOffset++;
-                            currentValue = 0;
-                        }
-                        else
-                        {
-                            currentValue++;
+                            offsetsList.SelectedIndex = currentOffset;
+                            remainingTime = totalTime;
+
+                            uint offset = OffsetCollection[currentOffset].Address;
+                            string type = OffsetCollection[currentOffset].Type;
+                            string value = valuesBox.Text.Split(',')[currentValue];
+                            value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);
+
+                            if (value != "No Console Detected" && value != "Not Connected")
+                            {
+                                rte.PokeXbox(new Offset(offset, type, value));
+                            }
+                            if (currentValue == totalValues - 1)
+                            {
+                                currentOffset++;
+                                currentValue = 0;
+                            }
+                            else
+                            {
+                                currentValue++;
+                            }
                         }
                     }
                 }

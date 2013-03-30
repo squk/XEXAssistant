@@ -33,5 +33,7 @@
         <Button x:Name="pauseButton" HorizontalAlignment="Right" Margin="0,0,117,21" VerticalAlignment="Bottom" Width="31" Height="31" Click="pauseButton_Click">
             <Image Source="pause.png"/>
         </Button>
+        <CheckBox x:Name="batchTestingCheck" Content="Enable Batch Testing" HorizontalAlignment="Right" Margin="0,101,9,0" VerticalAlignment="Top" Checked="batchTestingCheck_Checked"/>
+        <TextBox x:Name="batchesBox" HorizontalAlignment="Right" Height="24" Margin="0,128,9,0" TextWrapping="Wrap" Text="Offsets per Batch" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Controls:Window>
