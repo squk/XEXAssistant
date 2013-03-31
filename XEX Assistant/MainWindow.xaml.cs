@@ -210,11 +210,11 @@ namespace XEX_Assistant
                                 foreach(Offset offsetSinglet in offsetBatches[currentBatch])
                                 {
                                     Offset OffsetSinglet = offsetSinglet;
-                                    OffsetSinglet.Value = value.Replace("DEFAULT", offsetSinglet.Value);
+                                    OffsetSinglet.Value = value.Replace("DEFAULT", OffsetSinglet.Value);
                                     rte.PokeXbox(OffsetSinglet);
                                 }
                             }
-                            if (currentValue == totalValues - 1)
+                            if (currentValue == totalValues)
                             {
                                 currentBatch++;
                                 currentValue = 0;
