@@ -143,7 +143,9 @@ namespace XEX_Assistant
         private void StartIntervalPoking()
         {
             totalValues = valuesBox.Text.Split(',').Count();
-            
+            currentOffset = 0;
+            currentBatch = 0;
+            currentValue = 0;
             //prevent checking/unchecking once process has started
             if (batchTestingCheck.IsChecked == true)
             {
@@ -310,14 +312,24 @@ namespace XEX_Assistant
             pauseButton.Content = icon;
         }
 
-        private void batchTestingCheck_Checked(object sender, RoutedEventArgs e)
+        private void nextOffsetButton_Click(object sender, RoutedEventArgs e)
         {
-
+            currentBatch++;
+            currentOffset++;
+            currentValue = 0;
         }
 
-        private void nextButton_Click(object sender, RoutedEventArgs e)
+        private void nextValueButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (currentValue == totalValues - 1)
+            {
+                currentOffset++;
+                currentValue = 0;
+            }
+            else
+            {
+                currentValue++;
+            }
         }
     }
 }
