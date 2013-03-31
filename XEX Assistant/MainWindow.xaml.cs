@@ -323,6 +323,7 @@ namespace XEX_Assistant
             if (currentValue == totalValues - 1)
             {
                 currentOffset++;
+                currentBatch++;
                 currentValue = 0;
             }
             else
