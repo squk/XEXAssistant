@@ -204,14 +204,13 @@ namespace XEX_Assistant
                             string offset = OffsetCollection[currentOffset].Address;
                             string type = OffsetCollection[currentOffset].Type;
                             string value = valuesBox.Text.Split(',')[currentValue];
-                            value = value.Replace("DEFAULT", OffsetCollection[currentOffset].Value);
 
                             if (value != "No Console Detected" && value != "Not Connected")
                             {
                                 foreach(Offset offsetSinglet in offsetBatches[currentBatch])
                                 {
                                     Offset OffsetSinglet = offsetSinglet;
-                                    OffsetSinglet.Value = value;
+                                    OffsetSinglet.Value = value.Replace("DEFAULT", offsetSinglet.Value);
                                     rte.PokeXbox(OffsetSinglet);
                                 }
                             }
