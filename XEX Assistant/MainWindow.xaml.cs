@@ -131,10 +131,11 @@ namespace XEX_Assistant
 
         private int currentOffset;
         private int currentBatch;
+        private int offsetsPerBatch;
 
         private int currentValue;
         private int totalValues;
-        
+
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private List<List<Offset>> offsetBatches = new List<List<Offset>>();
         private bool useBatchPoking = false;
@@ -147,12 +148,20 @@ namespace XEX_Assistant
             if (batchTestingCheck.IsChecked == true)
             {
                 useBatchPoking = true;
-                for (int i = 0; i < totalValues; i += Convert.ToInt32(batchesBox.Text))
+                offsetsPerBatch = Convert.ToInt32(batchesBox.Text);
+                for (int i = 0; i < OffsetCollection.Count; i += Convert.ToInt32(batchesBox.Text))
                 {
                     List<Offset> singleBatch = new List<Offset>();
                     for (int j = 0; j < Convert.ToInt32(batchesBox.Text); j++)
                     {
-                        singleBatch.Add(OffsetCollection[i + j]);
+                        try
+                        {
+                            singleBatch.Add(OffsetCollection[i + j]);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                     offsetBatches.Add(singleBatch);
                 }
@@ -189,7 +198,7 @@ namespace XEX_Assistant
                         if (currentBatch <= offsetBatches.Count)
                         {
                             remainingTime = totalTime;
-
+                            offsetsList.SelectedIndex = currentBatch * offsetsPerBatch;
                             string offset = OffsetCollection[currentOffset].Address;
                             string type = OffsetCollection[currentOffset].Type;
                             string value = valuesBox.Text.Split(',')[currentValue];
@@ -304,6 +313,11 @@ namespace XEX_Assistant
         private void batchTestingCheck_Checked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void nextButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

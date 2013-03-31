@@ -12,7 +12,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Value Tester" Height="317.781" Width="630.366" Loaded="Window_Loaded_1">
     <Grid>
-        <ListView x:Name="offsetsList" ItemsSource="{Binding OffsetCollection}" HorizontalAlignment="Left" Margin="10,10,0,72" Width="319">
+        <ListView x:Name="offsetsList" ItemsSource="{Binding OffsetCollection}" HorizontalAlignment="Left" Margin="10,10,0,72" Width="319" SelectionMode="Multiple">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="140" Header="Offset" DisplayMemberBinding="{Binding Address}" />
@@ -35,5 +35,6 @@
         </Button>
         <CheckBox x:Name="batchTestingCheck" Content="Enable Batch Testing" HorizontalAlignment="Right" Margin="0,101,9,0" VerticalAlignment="Top" Checked="batchTestingCheck_Checked"/>
         <TextBox x:Name="batchesBox" HorizontalAlignment="Right" Height="24" Margin="0,128,9,0" TextWrapping="Wrap" Text="Offsets per Batch" VerticalAlignment="Top" Width="120"/>
+        <Button Content="NEXT" HorizontalAlignment="Left" Margin="348,236,0,0" VerticalAlignment="Top" Width="82"/>
     </Grid>
 </Controls:Window>
